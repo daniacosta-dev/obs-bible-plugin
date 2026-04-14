@@ -1,0 +1,98 @@
+/* =====================================================
+   OBS Bible Overlay — Variables y estilos base
+   Editá las variables para personalizar la apariencia
+   sin tocar el HTML.
+   ===================================================== */
+
+:root {
+  /* Tipografía del versículo */
+  --verse-font-family: 'Georgia', serif;
+  --verse-font-size: 2.4rem;
+  --verse-font-weight: 400;
+  --verse-line-height: 1.6;
+  --verse-color: #ffffff;
+  --verse-text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
+
+  /* Tipografía de la referencia */
+  --ref-font-size: 1.1rem;
+  --ref-color: #ffe08a;
+
+  /* Caja del versículo */
+  --bg-color: rgba(0, 0, 0, 0.55);
+  --bg-border-radius: 12px;
+  --overlay-padding: 2rem 2.8rem;
+  --overlay-max-width: 900px;
+
+  /* Posición vertical (distancia desde abajo) */
+  --overlay-position-bottom: 10%;
+
+  /* Duración de la animación de entrada/salida */
+  --transition-duration: 0.5s;
+}
+
+/* Fondo completamente transparente para OBS */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  overflow: hidden;
+  width: 100vw;
+  height: 100vh;
+}
+
+/* Contenedor que ocupa toda la pantalla */
+#overlay-root {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: var(--overlay-position-bottom);
+  pointer-events: none;
+}
+
+/* Caja del versículo */
+#verse-box {
+  background: var(--bg-color);
+  border-radius: var(--bg-border-radius);
+  padding: var(--overlay-padding);
+  max-width: var(--overlay-max-width);
+  width: 90%;
+  box-sizing: border-box;
+
+  /* Estado inicial: oculto */
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity var(--transition-duration) ease,
+    transform var(--transition-duration) ease;
+}
+
+/* Estado visible */
+#verse-box.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Texto del versículo */
+#verse-text {
+  font-family: var(--verse-font-family);
+  font-size: var(--verse-font-size);
+  font-weight: var(--verse-font-weight);
+  line-height: var(--verse-line-height);
+  color: var(--verse-color);
+  text-shadow: var(--verse-text-shadow);
+  margin: 0 0 0.6em 0;
+}
+
+/* Referencia (libro capítulo:versículo — versión) */
+#verse-ref {
+  font-family: var(--verse-font-family);
+  font-size: var(--ref-font-size);
+  font-weight: 400;
+  color: var(--ref-color);
+  text-shadow: var(--verse-text-shadow);
+  margin: 0;
+  opacity: 0.9;
+}

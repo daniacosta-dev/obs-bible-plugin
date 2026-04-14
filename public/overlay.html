@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bible Overlay</title>
+  <link rel="stylesheet" href="overlay.css" />
+</head>
+<body>
+
+<div id="overlay-root">
+  <div id="verse-box">
+    <p id="verse-text"></p>
+    <p id="verse-ref"></p>
+  </div>
+</div>
+
+<!-- Etiqueta de estilos dinámicos inyectados via WebSocket -->
+<style id="dynamic-css"></style>
+
+<script>
+  const verseBox  = document.getElementById('verse-box');
+  const verseText = document.getElementById('verse-text');
+  const verseRef  = document.getElementById('verse-ref');
+  const dynamicCss = document.getElementById('dynamic-css');
+
+  let ws = null;
+  let reconnectTimer = null;
+
+  // --- Muestra un versículo con animación de entrada ---
+  function mostrarVersiculo(data) {
+    verseText.textContent = data.text;
+    verseRef.textContent  = `${data.book} ${data.chapter}:${data.verse} — ${data.version}`;
+
+    // Forzar reflow para que la transición arranque desde cero
+    verseBox.classList.remove('visible');
+    void verseBox.offsetWidth;
+    verseBox.classList.add('visible');
+  }
+
+  // --- Oculta el versículo con animación de salida ---
+  function ocultarVersiculo() {
+    verseBox.classList.remove('visible');
+  }
+
+  // --- Aplica CSS personalizado recibido por WebSocket ---
+  function aplicarCSS(css) {
+    dynamicCss.textContent = css;
+  }
+
+  // --- Conexión WebSocket con reconexión automática ---
+  function conectar() {
+    if (reconnectTimer) {
+      clearTimeout(reconnectTimer);
+      reconnectTimer = null;
+    }
+
+    ws = new WebSocket('ws://localhost:3000');
+
+    ws.addEventListener('message', (event) => {
+      let msg;
+      try {
+        msg = JSON.parse(event.data);
+      } catch {
+        return;
+      }
+
+      switch (msg.type) {
+        case 'show_verse':
+          mostrarVersiculo(msg);
+          break;
+        case 'hide_verse':
+          ocultarVersiculo();
+          break;
+        case 'update_css':
+          aplicarCSS(msg.css);
+          break;
+      }
+    });
+
+    ws.addEventListener('close', () => {
+      // Reintentar conexión cada 3 segundos
+      reconnectTimer = setTimeout(conectar, 3000);
+    });
+
+    ws.addEventListener('error', () => {
+      ws.close();
+    });
+  }
+
+  conectar();
+</script>
+</body>
+</html>

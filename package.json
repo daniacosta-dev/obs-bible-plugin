@@ -1,0 +1,16 @@
+{
+  "name": "obs-bible-plugin",
+  "version": "1.0.0",
+  "description": "Overlay de versículos bíblicos para OBS — Reina-Valera 1909 (dominio público)",
+  "license": "GPL-3.0",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "setup": "node scripts/download-bible.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "ws": "^8.16.0"
+  }
+}
