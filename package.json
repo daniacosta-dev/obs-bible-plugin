@@ -1,16 +1,31 @@
 {
   "name": "obs-bible-plugin",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Overlay de versículos bíblicos para OBS — Reina-Valera 1909 (dominio público)",
   "license": "GPL-3.0",
-  "main": "server.js",
+  "main": "main.cjs",
   "type": "module",
   "scripts": {
     "start": "node server.js",
-    "setup": "node scripts/download-bible.js"
+    "start:tray": "node main.cjs",
+    "setup": "node scripts/download-bible.js",
+    "setup:rv1960": "node scripts/download-rv1960.js",
+    "setup:ntv": "node scripts/download-spa-bible.js NTV",
+    "setup:dhh": "node scripts/download-spa-bible.js DHH",
+    "setup:nvi": "node scripts/download-spa-bible.js NVI",
+    "setup:lbla": "node scripts/download-spa-bible.js LBLA",
+    "create-icon": "node scripts/create-icon.js",
+    "build": "node scripts/create-icon.js && npx @yao-pkg/pkg main.cjs --config pkg.config.json --target node22-win-x64 --output dist/obs-bible-overlay.exe",
+    "postbuild": "node scripts/assemble-dist.js",
+    "installer": "ISCC installer\\obs-bible-overlay.iss",
+    "release": "npm run build && npm run installer"
   },
   "dependencies": {
     "express": "^4.18.2",
+    "systray2": "^2.1.4",
     "ws": "^8.16.0"
+  },
+  "devDependencies": {
+    "@yao-pkg/pkg": "^6.15.0"
   }
 }

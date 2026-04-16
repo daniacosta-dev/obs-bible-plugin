@@ -15,7 +15,7 @@
   </div>
 </div>
 
-<!-- Etiqueta de estilos dinámicos inyectados via WebSocket -->
+<!-- CSS personalizado inyectado via WebSocket -->
 <style id="dynamic-css"></style>
 
 <script>
@@ -23,6 +23,10 @@
   const verseText = document.getElementById('verse-text');
   const verseRef  = document.getElementById('verse-ref');
   const dynamicCss = document.getElementById('dynamic-css');
+
+  // Elementos creados dinámicamente para la tipografía
+  let fontLinkEl  = null;   // <link> para Google Fonts
+  let fontStyleEl = null;   // <style> con las variables/reglas de fuente
 
   let ws = null;
   let reconnectTimer = null;
@@ -46,6 +50,32 @@
   // --- Aplica CSS personalizado recibido por WebSocket ---
   function aplicarCSS(css) {
     dynamicCss.textContent = css;
+  }
+
+  // --- Aplica tipografía: carga la fuente via <link> en <head> y aplica CSS ---
+  function aplicarFuente(css) {
+    const importMatch = css.match(/@import url\('([^']+)'\)/);
+    const styleCss = css.replace(/@import[^;]+;\s*/g, '').trim();
+
+    // Gestionar el <link> de Google Fonts
+    if (importMatch) {
+      if (!fontLinkEl) {
+        fontLinkEl = document.createElement('link');
+        fontLinkEl.rel = 'stylesheet';
+        document.head.appendChild(fontLinkEl);
+      }
+      fontLinkEl.href = importMatch[1];
+    } else if (fontLinkEl) {
+      fontLinkEl.remove();
+      fontLinkEl = null;
+    }
+
+    // Crear o actualizar el <style> de fuente en <head>
+    if (!fontStyleEl) {
+      fontStyleEl = document.createElement('style');
+      document.head.appendChild(fontStyleEl);
+    }
+    fontStyleEl.textContent = styleCss;
   }
 
   // --- Conexión WebSocket con reconexión automática ---
@@ -74,6 +104,9 @@
           break;
         case 'update_css':
           aplicarCSS(msg.css);
+          break;
+        case 'update_font':
+          aplicarFuente(msg.css);
           break;
       }
     });

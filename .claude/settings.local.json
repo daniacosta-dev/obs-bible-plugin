@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "WebSearch",
+      "WebFetch(domain:github.com)",
+      "Bash(npm show *)",
+      "Bash(curl -s https://registry.npmjs.org/systray2/-/systray2-2.1.4.tgz)",
+      "Bash(tar -xzO package/index.js)"
+    ]
+  }
+}

@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Instrucciones — Bible Overlay</title>
+  <style>
+    :root {
+      --bg:      #272A33;
+      --card:    #30333E;
+      --border:  #3A3E4A;
+      --text:    #ffffff;
+      --sub:     #C4CCD8;
+      --muted:   #6E7486;
+      --accent:  #5aa9ff;
+      --green:   #3fa35a;
+      --code-bg: #1e2128;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 32px 24px 48px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 14px;
+      line-height: 1.6;
+      background: var(--bg);
+      color: var(--text);
+      max-width: 720px;
+      margin-inline: auto;
+    }
+
+    /* ── Header ── */
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 32px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    header h1 {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text);
+    }
+    header p {
+      margin: 4px 0 0;
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .badge {
+      font-size: 11px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      padding: 3px 10px;
+      border-radius: 20px;
+    }
+
+    /* ── Secciones ── */
+    section { margin-bottom: 36px; }
+
+    h2 {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--accent);
+      margin: 0 0 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    h2::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ── Pasos ── */
+    .steps { display: flex; flex-direction: column; gap: 14px; }
+
+    .step {
+      display: flex;
+      gap: 14px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+    }
+    .step-num {
+      flex-shrink: 0;
+      width: 26px; height: 26px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .step-body { flex: 1; }
+    .step-body strong {
+      display: block;
+      font-size: 13px;
+      margin-bottom: 4px;
+      color: var(--text);
+    }
+    .step-body p {
+      margin: 0 0 8px;
+      color: var(--sub);
+      font-size: 13px;
+    }
+    .step-body p:last-child { margin-bottom: 0; }
+
+    /* ── URL copiable ── */
+    .url-block {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      padding: 8px 12px;
+      margin: 8px 0;
+      font-family: 'Consolas', 'Fira Code', monospace;
+      font-size: 13px;
+      color: var(--accent);
+    }
+    .url-block button {
+      flex-shrink: 0;
+      margin-left: auto;
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 3px;
+      cursor: pointer;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .url-block button:hover { color: var(--text); border-color: var(--sub); }
+    .url-block button.copied { color: var(--green); border-color: var(--green); }
+
+    /* ── Tabla de configuración ── */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      margin-top: 8px;
+    }
+    th {
+      text-align: left;
+      padding: 6px 10px;
+      background: var(--code-bg);
+      color: var(--muted);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border-bottom: 1px solid var(--border);
+    }
+    td {
+      padding: 7px 10px;
+      border-bottom: 1px solid var(--border);
+      color: var(--sub);
+    }
+    td:first-child { color: var(--text); font-weight: 500; }
+    td code {
+      font-family: 'Consolas', monospace;
+      font-size: 12px;
+      background: var(--code-bg);
+      padding: 1px 5px;
+      border-radius: 3px;
+      color: var(--accent);
+    }
+    tr:last-child td { border-bottom: none; }
+
+    /* ── Nota / tip ── */
+    .tip {
+      display: flex;
+      gap: 10px;
+      background: rgba(90,169,255,0.07);
+      border: 1px solid rgba(90,169,255,0.25);
+      border-radius: 6px;
+      padding: 10px 14px;
+      font-size: 12px;
+      color: var(--sub);
+      margin-top: 10px;
+    }
+    .tip-icon { flex-shrink: 0; font-size: 15px; }
+
+    /* ── Footer ── */
+    footer {
+      margin-top: 40px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+      font-size: 11px;
+      color: var(--muted);
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>Bible Overlay — Instrucciones</h1>
+    <p>Cómo integrar el panel de control y el overlay en OBS Studio</p>
+  </div>
+  <span class="badge">v0.1.0</span>
+</header>
+
+<!-- ══════════════════════════════════════════ -->
+<section>
+  <h2>1 · Panel de control</h2>
+  <p style="color:var(--sub);margin:0 0 14px;font-size:13px">
+    El panel es la interfaz desde donde seleccionas y muestras los versículos.
+    Se abre en el navegador o se puede anclar como dock dentro de OBS.
+  </p>
+
+  <div class="steps">
+
+    <div class="step">
+      <div class="step-num">A</div>
+      <div class="step-body">
+        <strong>Opción A — Navegador externo (más simple)</strong>
+        <p>Abre esta URL en cualquier navegador mientras OBS esté abierto:</p>
+        <div class="url-block">
+          <span>http://localhost:3000/panel.html</span>
+          <button onclick="copiar(this,'http://localhost:3000/panel.html')">Copiar</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">B</div>
+      <div class="step-body">
+        <strong>Opción B — Dock personalizado en OBS (recomendado)</strong>
+        <p>El panel queda integrado en la interfaz de OBS como una ventana acoplable.</p>
+        <p>
+          En OBS: <strong>Vista → Docks → Custom Browser Docks</strong><br>
+          Haz clic en <strong>+</strong> y completa:
+        </p>
+        <table>
+          <tr><th>Campo</th><th>Valor</th></tr>
+          <tr><td>Nombre del dock</td><td><code>Bible Overlay</code></td></tr>
+          <tr><td>URL</td><td><code>http://localhost:3000/panel.html</code></td></tr>
+        </table>
+        <p style="margin-top:8px">Haz clic en <strong>Aplicar</strong> y el dock aparece en el menú Vista.</p>
+        <figure style="margin:12px 0 0">
+          <img src="overlay1.jpg" alt="Dock de Bible Overlay integrado en OBS Studio"
+               style="width:100%;border-radius:6px;border:1px solid var(--border);display:block" />
+          <figcaption style="font-size:11px;color:var(--muted);margin-top:6px;text-align:center">
+            El panel anclado como dock dentro de OBS Studio
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="tip">
+    <span class="tip-icon">💡</span>
+    <span>El panel recuerda la sesión de versículos y la tipografía entre reinicios.</span>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════ -->
+<section>
+  <h2>2 · Fuente de overlay en OBS</h2>
+  <p style="color:var(--sub);margin:0 0 14px;font-size:13px">
+    El overlay es lo que aparece sobre el video en el stream. Se agrega como un
+    <strong>Browser Source</strong> en cada escena donde quieres que aparezcan los versículos.
+  </p>
+
+  <div class="steps">
+
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <strong>Agregar el Browser Source</strong>
+        <p>En el panel <strong>Fuentes</strong> de OBS, haz clic en <strong>+</strong> y elige <strong>Navegador</strong>.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <strong>Configurar la URL</strong>
+        <div class="url-block">
+          <span>http://localhost:3000/overlay.html</span>
+          <button onclick="copiar(this,'http://localhost:3000/overlay.html')">Copiar</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <strong>Ajustes del Browser Source</strong>
+        <table>
+          <tr><th>Propiedad</th><th>Valor recomendado</th></tr>
+          <tr><td>Ancho</td><td><code>1920</code> (o el ancho de tu escena)</td></tr>
+          <tr><td>Alto</td><td><code>1080</code> (o el alto de tu escena)</td></tr>
+          <tr><td>FPS</td><td><code>30</code></td></tr>
+          <tr><td>Apagar cuando no sea visible</td><td><code>Desactivado</code></td></tr>
+          <tr><td>Refrescar al activar escena</td><td><code>Desactivado</code></td></tr>
+          <tr><td>CSS personalizado</td><td>Dejar vacío</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <strong>Posicionar el overlay</strong>
+        <p>
+          Arrastra el Browser Source al <strong>tope del listado de fuentes</strong> de la escena
+          para que aparezca por encima del video. Ajusta el tamaño para que ocupe toda la escena
+          (clic derecho → <strong>Transformar → Ajustar a pantalla</strong>).
+        </p>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="tip">
+    <span class="tip-icon">⚠️</span>
+    <span>
+      <strong>"Apagar cuando no sea visible"</strong> debe estar <strong>desactivado</strong>.
+      Si está activado, el overlay pierde la conexión WebSocket al cambiar de escena
+      y no recibirá los versículos hasta que se recargue.
+    </span>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════ -->
+<section>
+  <h2>3 · Flujo de uso</h2>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <strong>Iniciar la aplicación</strong>
+        <p>Ejecuta <code>obs-bible-overlay.exe</code>. El panel se abre automáticamente en el navegador y aparece el ícono en la bandeja del sistema. Si configuraste la opción B de instalacion y vas a controlar el panel desde el dock de OBS puedes cerrar el navegador sin problemas.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <strong>Seleccionar el versículo</strong>
+        <p>En el panel: elige la versión, el libro y el capítulo. Haz clic en el versículo que deseas mostrar.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <strong>Mostrar en el stream</strong>
+        <p>Haz clic en <strong>Mostrar ▶</strong> (o presiona <kbd>Enter</kbd>). El versículo aparece en el overlay con animación.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <strong>Ocultar</strong>
+        <p>Haz clic en <strong>Ocultar</strong> para que el versículo desaparezca del overlay.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  OBS Bible Overlay v0.1.0 &nbsp;·&nbsp; Autor: Dani Acosta &nbsp;·&nbsp;
+  Servidor en <code style="color:var(--accent)">http://localhost:3000</code>
+</footer>
+
+<script>
+  function copiar(btn, texto) {
+    navigator.clipboard.writeText(texto).then(() => {
+      btn.textContent = '✓ Copiado';
+      btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = 'Copiar'; btn.classList.remove('copied'); }, 2000);
+    });
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+{
+  "pkg": {
+    "scripts": [
+      "server.cjs"
+    ],
+    "assets": [
+      "public/**/*",
+      "node_modules/systray2/package.json",
+      "node_modules/systray2/traybin/tray_windows_release.exe"
+    ],
+    "targets": [
+      "node22-win-x64"
+    ],
+    "compress": "Brotli"
+  }
+}

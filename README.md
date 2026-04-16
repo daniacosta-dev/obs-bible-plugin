@@ -180,13 +180,60 @@ The red dot means the WebSocket is not connected. Make sure the server is runnin
 
 ---
 
+## Additional Bible versions
+
+The installer includes only the **Reina-Valera 1909** (public domain). Other translations (RV1960, NVI, NTV, etc.) are protected by copyright and are not distributed with this app.
+
+If you own a licensed copy or have permission to use a translation, you can add it manually:
+
+1. Place a JSON file in the `data/` folder next to the executable
+2. Use one of the recognized filenames:
+
+| Filename | Version |
+|----------|---------|
+| `rv1960.json` | Reina-Valera 1960 |
+| `nvi.json` | Nueva Versión Internacional |
+| `ntv.json` | Nueva Traducción Viviente |
+| `dhh.json` | Dios Habla Hoy |
+| `lbla.json` | La Biblia de las Américas |
+
+### JSON format
+
+```json
+{
+  "version": "Display name shown in the panel",
+  "lang": "es",
+  "books": [
+    {
+      "id": 1,
+      "name": "Génesis",
+      "abbrev": "Gn",
+      "chapters": [
+        {
+          "chapter": 1,
+          "verses": [
+            { "verse": 1, "text": "En el principio..." },
+            { "verse": 2, "text": "Y la tierra..." }
+          ]
+        }
+      ]
+    }
+  ]
+}
+```
+
+Books must use sequential `id` values (1 = Genesis … 66 = Revelation). The app loads any files present in `data/` at startup and skips those that are missing.
+
+> **Legal notice:** You are solely responsible for ensuring you have the right to use any Bible translation you add. This app does not provide, distribute, or facilitate the download of copyrighted translations.
+
+---
+
 ## Bible data license
 
 The **Reina-Valera 1909** was published in 1909 and is in the public domain worldwide. Source data from [scrollmapper/bible_databases](https://github.com/scrollmapper/bible_databases), also public domain.
 
 ## License
 
-[GPL-3.0](LICENSE) — required by the libmpv dependency.
+[GPL-3.0](LICENSE)
 
-Made with ❤️ · MIT License · [Ko-fi](https://ko-fi.com/daniacostadev)
-Created by [@daniacosta-dev](https://github.com/daniacosta-dev)
+Made with ❤️ by [@daniacosta-dev](https://github.com/daniacosta-dev)
