@@ -3,44 +3,33 @@
 A local tool for displaying Bible verses as an overlay in OBS Studio.
 Uses the **Reina-Valera 1909** translation, which is in the public domain with no usage restrictions.
 
----
-
-## Requirements
-
-- **Node.js 18** or higher
-- Internet connection (setup only)
-- OBS Studio (any modern version)
+<img src="public/obs-demo.png" alt="OBS Bible Overlay demo" style="border-radius:12px" />
 
 ---
 
 ## Installation
 
-### Linux / macOS
+### Windows — Installer (recommended)
+
+Download the latest `obs-bible-overlay-setup.exe` from the [Releases](../../releases/latest) page, run it, and follow the wizard. No Node.js required.
+
+> **Note:** Windows may show a security warning when running the installer since it is not yet code-signed. Click **"More info" → "Run anyway"** to proceed.
+
+---
+
+### From source (Linux / macOS / Windows)
+
+**Requirements:** Node.js 18+, OBS Studio, internet connection (setup only)
 
 ```bash
-# 1. Enter the project folder
+# 1. Clone the repo
+git clone https://github.com/daniacosta-dev/obs-bible-plugin.git
 cd obs-bible-plugin
 
 # 2. Install dependencies
 npm install
 
-# 3. Download and normalize the RV1909 Bible
-npm run setup
-
-# 4. Start the server
-npm start
-```
-
-### Windows (PowerShell)
-
-```powershell
-# 1. Enter the project folder
-cd obs-bible-plugin
-
-# 2. Install dependencies
-npm install
-
-# 3. Download and normalize the RV1909 Bible
+# 3. Download the RV1909 Bible data
 npm run setup
 
 # 4. Start the server
@@ -65,6 +54,8 @@ The server runs on `http://localhost:3000`. Keep it open while using OBS.
    ```
 4. Click **OK**
 
+<img src="public/overlay-settings.png" alt="OBS Browser Source settings" style="border-radius:12px" />
+
 The overlay is fully transparent. Layer it on top of your other sources.
 
 ---
@@ -76,6 +67,8 @@ The overlay is fully transparent. Layer it on top of your other sources.
    - **Dock Name:** `Bible`
    - **URL:** `http://localhost:3000/panel.html`
 3. The panel appears as a floating dock inside OBS
+
+<img src="public/panel-settings.png" alt="OBS Custom Dock settings" style="border-radius:12px" />
 
 ---
 
